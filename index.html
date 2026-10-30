@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090817">
+  <meta name="description" content="Quizora Music - Belajar teori musik sambil bermain kuis.">
+  <title>Quizora Music | Game Kuis</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/questions.js" defer></script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="floating-notes" aria-hidden="true">
+    <span>♫</span><span>♪</span><span>♬</span>
+    <span>♩</span><span>♫</span><span>♪</span>
+  </div>
+
+  <header class="site-header">
+    <a href="#" id="brandHome" class="brand">
+      <span class="brand-icon">♫</span>
+      Quiz<span class="brand-pink">ora.</span>
+    </a>
+    <div class="header-right">
+      <span class="header-tag">MUSIC LEARNING STUDIO</span>
+      <button type="button" id="openAdminBtn" class="button secondary">
+        ⚙ Admin
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- BERANDA -->
+    <section id="homeScreen" class="screen active">
+      <div class="hero card">
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+
+        <div class="music-decoration" aria-hidden="true">♫ ♪ ♬ ♩ ♫</div>
+
+        <div class="hero-icon-wrap">
+          <div class="hero-icon">🎧</div>
+          <span class="sound-wave wave-one"></span>
+          <span class="sound-wave wave-two"></span>
+        </div>
+
+        <p class="eyebrow">LISTEN • THINK • ANSWER</p>
+        <h1>Siap Menguji<br><span>Pengetahuan Musikmu?</span></h1>
+        <p class="hero-description">
+          Mainkan kuis, kumpulkan poin, dan buktikan seberapa hebat
+          pengetahuan musikmu. Belajar jadi lebih seru bersama Quizora!
+        </p>
+
+        <div class="equalizer" aria-hidden="true">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span><span></span>
+          <span></span><span></span><span></span>
+        </div>
+
+        <div class="stats">
+          <div class="stat">
+            <strong id="totalQuestions">12</strong>
+            <span>Total soal</span>
+          </div>
+          <div class="stat">
+            <strong>4</strong>
+            <span>Pilihan jawaban</span>
+          </div>
+          <div class="stat">
+            <strong>♫</strong>
+            <span>Music vibes</span>
+          </div>
+        </div>
+
+        <form id="startForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="playerName">Nama pemain</label>
+              <input id="playerName" type="text" maxlength="40"
+                     placeholder="Masukkan namamu" required>
+            </div>
+
+            <div class="field">
+              <label for="categorySelect">Kategori</label>
+              <select id="categorySelect">
+                <option value="Semua">Semua kategori</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="levelSelect">Tingkat kesulitan</label>
+              <select id="levelSelect">
+                <option value="Semua">Semua tingkat</option>
+                <option value="Mudah">Mudah</option>
+                <option value="Menengah">Menengah</option>
+                <option value="Sulit">Sulit</option>
+              </select>
+            </div>
+          </div>
+
+          <button type="submit" class="button primary full start-button">
+            <span>▶</span> Mulai Bermain
+          </button>
+        </form>
+
+        <div class="hero-bottom-note">
+          <span>✦</span> Jawab dengan benar dan raih skor tertinggi!
+          <span>✦</span>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-item">
+          <span>🎼</span>
+          <div>
+            <strong>Belajar Musik</strong>
+            <small>Kenali teori musik</small>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span>⚡</span>
+          <div>
+            <strong>Uji Kecepatan</strong>
+            <small>Jawab sebelum waktu habis</small>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span>🏆</span>
+          <div>
+            <strong>Raih Skor</strong>
+            <small>Kumpulkan poin terbaik</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALAMAN KUIS -->
+    <section id="quizScreen" class="screen">
+      <div class="card quiz-card">
+        <div class="quiz-top-decoration">
+          <span>♫ MUSIC CHALLENGE</span>
+          <span class="mini-equalizer"><i></i><i></i><i></i><i></i></span>
+        </div>
+
+        <div class="question-top">
+          <div class="badge-group">
+            <span id="categoryBadge" class="badge">Kategori</span>
+            <span id="levelBadge" class="badge pink-badge">Mudah</span>
+          </div>
+          <div id="timerBox" class="timer-box">
+            <span>⏱</span>
+            <span id="timerText">20</span>
+            <span>detik</span>
+          </div>
+        </div>
+
+        <div class="progress-info">
+          <span id="questionCounter">Pertanyaan 1 dari 12</span>
+          <span id="progressPercent">0%</span>
+        </div>
+
+        <div class="progress">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+
+        <div class="question-heading">
+          <span id="questionNumber" class="question-number">01</span>
+          <div>
+            <p class="eyebrow">YOUR QUESTION</p>
+            <h2 id="questionText">Pertanyaan akan muncul di sini.</h2>
+          </div>
+        </div>
+
+        <img id="questionImage" class="question-image hidden"
+             alt="Gambar pertanyaan">
+
+        <div id="answersGrid" class="answers-grid"></div>
+
+        <div id="answerHint" class="answer-hint">
+          Pilih satu jawaban yang paling tepat.
+        </div>
+
+        <div class="quiz-bottom">
+          <div class="score-display">
+            <span>⭐ Skor sementara</span>
+            <strong id="liveScore">0</strong>
+          </div>
+          <button type="button" id="nextQuestionBtn"
+                  class="button primary" disabled>
+            Berikutnya →
+          </button>
+        </div>
+
+        <button type="button" id="quitQuizBtn" class="button text-button">
+          ← Keluar dari kuis
+        </button>
+      </div>
+    </section>
+
+    <!-- HALAMAN HASIL -->
+    <section id="resultScreen" class="screen">
+      <div class="card result-card">
+        <div class="result-decoration">✦ ♫ ✦</div>
+        <div id="resultMedal" class="hero-icon">🏆</div>
+        <p class="eyebrow">YOUR PERFORMANCE</p>
+        <h1 id="resultTitle">Kuis Selesai!</h1>
+        <p id="resultSubtitle">Ini hasil permainanmu.</p>
+
+        <div id="finalScore" class="final-score">0</div>
+        <p class="muted center">TOTAL POIN</p>
+
+        <div class="stats">
+          <div class="stat">
+            <strong id="correctCount">0</strong>
+            <span>Jawaban benar</span>
+          </div>
+          <div class="stat">
+            <strong id="wrongCount">0</strong>
+            <span>Jawaban salah</span>
+          </div>
+          <div class="stat">
+            <strong id="finalAccuracy">0%</strong>
+            <span>Akurasi</span>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <button type="button" id="reviewBtn" class="button secondary">
+            📖 Lihat Pembahasan
+          </button>
+          <button type="button" id="playAgainBtn" class="button primary">
+            ↻ Main Lagi
+          </button>
+        </div>
+
+        <div id="reviewPanel" class="review-panel hidden">
+          <div class="review-heading">
+            <h2>♫ Pembahasan Jawaban</h2>
+            <button type="button" id="hideReviewBtn"
+                    class="button secondary small-button">
+              Tutup
+            </button>
+          </div>
+          <div id="reviewList" class="review-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HALAMAN ADMIN -->
+    <section id="adminScreen" class="screen">
+      <div class="card admin-card">
+        <div class="admin-heading">
+          <div>
+            <p class="eyebrow">QUIZ MANAGEMENT</p>
+            <h1>Studio <span>Admin</span></h1>
+            <p>Kelola bank soal dan gambar pertanyaanmu.</p>
+          </div>
+          <button type="button" id="adminHomeBtn" class="button secondary">
+            ← Beranda
+          </button>
+        </div>
+
+        <div class="admin-summary">
+          <span>Jumlah soal tersimpan</span>
+          <strong id="questionCountLabel">12 soal</strong>
+        </div>
+
+        <div class="toolbar">
+          <button type="button" id="newQuestionBtn" class="button primary">
+            ＋ Tambah Soal
+          </button>
+          <button type="button" id="exportQuestionsBtn" class="button secondary">
+            ↓ Ekspor Cadangan
+          </button>
+          <button type="button" id="importQuestionsBtn" class="button secondary">
+            ↑ Impor Cadangan
+          </button>
+          <input type="file" id="importFile" accept=".json,application/json"
+                 class="hidden">
+          <button type="button" id="resetQuestionsBtn" class="button danger">
+            Pulihkan Soal Bawaan
+          </button>
+        </div>
+
+        <form id="questionForm" class="editor hidden">
+          <h2 id="adminFormTitle">Tambah soal baru</h2>
+          <input type="hidden" id="editQuestionId">
+
+          <div class="form-grid">
+            <div class="field full-width">
+              <label for="adminQuestion">Pertanyaan *</label>
+              <textarea id="adminQuestion" rows="3"
+                        placeholder="Tuliskan pertanyaan..." required></textarea>
+            </div>
+
+            <div class="field">
+              <label for="adminCategory">Kategori *</label>
+              <input id="adminCategory" type="text" maxlength="60"
+                     placeholder="Contoh: Seni Musik" required>
+            </div>
+
+            <div class="field">
+              <label for="adminLevel">Tingkat kesulitan</label>
+              <select id="adminLevel">
+                <option value="Mudah">Mudah</option>
+                <option value="Menengah">Menengah</option>
+                <option value="Sulit">Sulit</option>
+              </select>
+            </div>
+
+            <div class="field full-width">
+              <label for="adminImage">Gambar soal (opsional)</label>
+              <input id="adminImage" type="file" accept="image/*">
+              <img id="imagePreview" class="image-preview hidden"
+                   alt="Pratinjau gambar soal">
+              <button type="button" id="removeImageBtn"
+                      class="button danger small-button hidden">
+                Hapus gambar
+              </button>
+              <p class="notice">Gunakan JPG, PNG, atau WebP maksimal 1 MB per gambar.</p>
+            </div>
+
+            <div class="field">
+              <label for="optionA">Pilihan A *</label>
+              <input id="optionA" required>
+            </div>
+            <div class="field">
+              <label for="optionB">Pilihan B *</label>
+              <input id="optionB" required>
+            </div>
+            <div class="field">
+              <label for="optionC">Pilihan C *</label>
+              <input id="optionC" required>
+            </div>
+            <div class="field">
+              <label for="optionD">Pilihan D *</label>
+              <input id="optionD" required>
+            </div>
+
+            <div class="field">
+              <label for="adminCorrect">Jawaban benar</label>
+              <select id="adminCorrect">
+                <option value="0">A</option>
+                <option value="1">B</option>
+                <option value="2">C</option>
+                <option value="3">D</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="adminTime">Waktu (detik)</label>
+              <input id="adminTime" type="number" min="5" max="120"
+                     value="20" required>
+            </div>
+
+            <div class="field full-width">
+              <label for="adminExplanation">Pembahasan *</label>
+              <textarea id="adminExplanation" rows="3"
+                        placeholder="Penjelasan jawaban benar..." required></textarea>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <button type="submit" id="saveQuestionBtn" class="button primary">
+              Simpan Soal
+            </button>
+            <button type="button" id="cancelEditBtn"
+                    class="button secondary hidden">
+              Batal Edit
+            </button>
+          </div>
+        </form>
+
+        <div class="list-heading">
+          <h2>Daftar Soal</h2>
+        </div>
+        <div id="adminQuestionList" class="admin-question-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+    <!-- POP-UP PENYEMANGAT SETIAP 3 SOAL -->
+    <div id="motivationModal"
+        class="motivation-modal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="motivationTitle">
+
+        <div class="motivation-backdrop"></div>
+
+        <div class="motivation-card">
+
+            <button type="button"
+                    id="closeMotivationBtn"
+                    class="motivation-close"
+                    aria-label="Tutup pop-up">
+                ×
+            </button>
+
+            <div class="confetti confetti-one">✦</div>
+            <div class="confetti confetti-two">♫</div>
+            <div class="confetti confetti-three">✧</div>
+
+            <div class="motivation-icon" id="motivationIcon">🎧</div>
+
+            <p class="eyebrow">QUIZORA MOTIVATION BREAK</p>
+
+            <h2 id="motivationTitle">
+                Wihh, keren banget!
+            </h2>
+
+            <p id="motivationMessage">
+                Tiga soal sudah kamu lewati. Jangan menyerah!
+            </p>
+
+            <div class="motivation-progress">
+                <span id="motivationProgress">3 soal selesai</span>
+                <span>✨ Keep going!</span>
+            </div>
+
+            <div class="motivation-equalizer" aria-hidden="true">
+                <i></i><i></i><i></i><i></i>
+                <i></i><i></i><i></i>
+            </div>
+
+            <!-- TOMBOL SUARA -->
+            <div class="motivation-audio-controls">
+
+                <button type="button"
+                        id="speakMotivationBtn"
+                        class="button secondary">
+                    🔊 Dengarkan Motivasi
+                </button>
+
+                <button type="button"
+                        id="continueQuizBtn"
+                        class="button primary">
+                    Lanjut ke soal berikutnya 🚀
+                </button>
+
+            </div>
+
+            <p id="voiceStatus" class="motivation-footer" aria-live="polite">
+                Tekan tombol Dengarkan Motivasi untuk mendengar pesan.
+            </p>
+
+        </div>
+    </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <footer>
+    <div class="footer-music">♫ ♬ ♫</div>
+    <p>QUIZORA MUSIC</p>
+    <span>Belajar • Bermain • Berkembang</span>
+  </footer>
+
+  <!-- Pengatur jeda motivasi tanpa mengubah app.js -->
+    <script>
+    (() => {
+        const nextButton = document.getElementById("nextQuestionBtn");
+        const modal = document.getElementById("motivationModal");
+
+        const continueButton = document.getElementById("continueQuizBtn");
+        const closeButton = document.getElementById("closeMotivationBtn");
+        const speakButton = document.getElementById("speakMotivationBtn");
+
+        const backdrop = modal.querySelector(".motivation-backdrop");
+
+        const title = document.getElementById("motivationTitle");
+        const message = document.getElementById("motivationMessage");
+        const icon = document.getElementById("motivationIcon");
+        const progress = document.getElementById("motivationProgress");
+        const voiceStatus = document.getElementById("voiceStatus");
+
+        let allowNextClick = false;
+        let pendingNext = false;
+
+        const messages = [
+            {
+                icon: "🎧",
+                title: "Wihhh, tiga soal lewat!",
+                message: "Cieee, ternyata otaknya nggak cuma dipakai buat mikirin dia ya! Tiga soal sudah berhasil kamu lewati. Ayo lanjut, jangan kasih kesempatan jawaban salah buat menang!"
+            },
+            {
+                icon: "🎼",
+                title: "Enam soal? Gampang katanya!",
+                message: "Waduhhh, makin panas nih! Kalau begini, sebentar lagi kamu bisa jadi guru musik dadakan. Tapi jangan sombong dulu ya, masih ada soal yang menunggu untuk menguji kewarasanmu!"
+            },
+            {
+                icon: "🔥",
+                title: "SEMBILAN SOAL! GOKIL!",
+                message: "Busettt, kamu masih bertahan! Aku kira tadi sudah mau menyerah dan pura-pura sinyal hilang. Hahaha! Ayo lanjut, tinggal sedikit lagi menuju garis finish!"
+            },
+            {
+                icon: "🏆",
+                title: "FINAL BOSS MENUNGGU!",
+                message: "Nahhh, ini dia saatnya! Jangan sampai perjuanganmu berakhir tragis seperti baterai HP satu persen. Tarik napas, fokus, dan selesaikan kuisnya. Kamu pasti bisa!"
+            }
+        ];
+
+        // MENAMPILKAN POP-UP
+        function openMotivation(completed, total) {
+
+            const messageIndex = Math.min(
+                Math.floor(completed / 3) - 1,
+                messages.length - 1
+            );
+
+            const selected = messages[messageIndex];
+
+            icon.textContent = selected.icon;
+            title.textContent = selected.title;
+            message.textContent = selected.message;
+
+            progress.textContent =
+                completed + " dari " + total + " soal selesai";
+
+            voiceStatus.textContent =
+                "Tekan tombol Dengarkan Motivasi untuk mendengar pesan.";
+
+            modal.classList.add("show");
+            modal.setAttribute("aria-hidden", "false");
+
+            document.body.classList.add("modal-open");
+
+            continueButton.focus();
+        }
+
+        // MEMBACA MOTIVASI DENGAN SUARA
+        function speakMotivation() {
+
+            if (!("speechSynthesis" in window)) {
+                voiceStatus.textContent =
+                    "Maaf, browser kamu belum mendukung fitur suara.";
+
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+
+            const speech = new SpeechSynthesisUtterance(
+                title.textContent + ". " + message.textContent
+            );
+
+            speech.lang = "id-ID";
+            speech.rate = 1.02;
+            speech.pitch = 1.2;
+            speech.volume = 1;
+
+            const voices = window.speechSynthesis.getVoices();
+
+            const indonesianVoice = voices.find(voice =>
+                voice.lang.toLowerCase().startsWith("id")
+            );
+
+            if (indonesianVoice) {
+                speech.voice = indonesianVoice;
+            }
+
+            speech.onstart = () => {
+                voiceStatus.textContent = "🔊 Sedang membacakan motivasi...";
+                voiceStatus.classList.add("speaking");
+            };
+
+            speech.onend = () => {
+                voiceStatus.textContent = "✨ Motivasi selesai dibacakan!";
+                voiceStatus.classList.remove("speaking");
+            };
+
+            speech.onerror = () => {
+                voiceStatus.textContent =
+                    "Suara tidak dapat diputar. Coba tekan tombol sekali lagi.";
+
+                voiceStatus.classList.remove("speaking");
+            };
+
+            window.speechSynthesis.speak(speech);
+        }
+
+        // MENUTUP POP-UP
+        function closeMotivation() {
+
+            modal.classList.remove("show");
+            modal.setAttribute("aria-hidden", "true");
+
+            document.body.classList.remove("modal-open");
+
+            if ("speechSynthesis" in window) {
+                window.speechSynthesis.cancel();
+            }
+
+            voiceStatus.classList.remove("speaking");
+        }
+
+        // MENCEGAH SOAL BERIKUTNYA DIBUKA SEBELUM POP-UP DITUTUP
+        nextButton.addEventListener("click", (event) => {
+
+            if (allowNextClick) {
+                allowNextClick = false;
+                return;
+            }
+
+            const counter =
+                document.getElementById("questionCounter").textContent;
+
+            const match = counter.match(
+                /Pertanyaan\s+(\d+)\s+dari\s+(\d+)/i
+            );
+
+            if (!match) return;
+
+            const current = Number(match[1]);
+            const total = Number(match[2]);
+
+            if (current % 3 === 0 && current < total) {
+
+                event.preventDefault();
+                event.stopImmediatePropagation();
+
+                if (pendingNext) return;
+
+                pendingNext = true;
+
+                openMotivation(current, total);
+            }
+
+        }, true);
+
+        // LANJUT KE SOAL BERIKUTNYA
+        function continueToNext() {
+
+            if (!pendingNext) return;
+
+            pendingNext = false;
+
+            closeMotivation();
+
+            allowNextClick = true;
+
+            nextButton.click();
+        }
+
+        // EVENT TOMBOL
+        speakButton.addEventListener("click", speakMotivation);
+
+        continueButton.addEventListener("click", continueToNext);
+
+        closeButton.addEventListener("click", continueToNext);
+
+        backdrop.addEventListener("click", continueToNext);
+
+        document.addEventListener("keydown", (event) => {
+
+            if (
+                event.key === "Escape" &&
+                modal.classList.contains("show")
+            ) {
+                continueToNext();
+            }
+
+        });
+
+    })();
+    </script>
+
+</body>
+</html>
